@@ -9,16 +9,23 @@ import org.junit.Test;
 public class InnTestCase {
 
 	@Test
-	public void testDefaultValues() throws Exception {
+	public void testUpdateAgainstLegacy() throws Exception {
 		Inn inn = new Inn();
-		List<Item> items = inn.getItems();
-		assertThat(extractProperty("name").from(items)).containsExactly(
-				"+5 Dexterity Vest", "Aged Brie", "Elixir of the Mongoose",
-				"Sulfuras, Hand of Ragnaros",
-				"Backstage passes to a TAFKAL80ETC concert",
-				"Conjured Mana Cake");
-		assertThat(extractProperty("sellIn").from(items)).containsExactly(10, 2, 5, 0, 15, 3);
-		assertThat(extractProperty("quality").from(items)).containsExactly(20, 0, 7, 80, 20, 6);
+		LegacyInn legacyInn = new LegacyInn();
+
+		for (int i = 0; i < 100; i++) {
+			List<Item> items = inn.getItems();
+			List<Item> legacyItems = legacyInn.getItems();
+
+			for (int j = 0; j < items.size(); ++j) {
+				Item item = items.get(j);
+				Item legacy = legacyItems.get(j);
+				assertThat(item.getSellIn()).isEqualTo(legacy.getSellIn());
+				assertThat(item.getQuality()).isEqualTo(legacy.getQuality());
+			}
+			inn.updateQuality();
+			legacyInn.updateQuality();
+		}
 	}
 
 }
