@@ -17,6 +17,11 @@ public class ItemUpdater {
 				item.setQuality(item.getQuality() + 1);
 			}
 			item.setSellIn(item.getSellIn() - 1);
+			if (item.getSellIn() < 0) {
+				if (item.getQuality() < 50) {
+					item.setQuality(item.getQuality() + 1);
+				}
+			}
 		} else if (item.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
 			if (item.getQuality() < 50) {
 				item.setQuality(item.getQuality() + 1);
@@ -34,24 +39,14 @@ public class ItemUpdater {
 				}
 			}
 			item.setSellIn(item.getSellIn() - 1);
+			if (item.getSellIn() < 0) {
+				item.setQuality(item.getQuality() - item.getQuality());
+			}
 		} else {
 			if (item.getQuality() > 0) {
 				item.setQuality(item.getQuality() - 1);
 			}
 			item.setSellIn(item.getSellIn() - 1);
-		}
-
-		if (item.getName().equals("Aged Brie")) {
-			if (item.getSellIn() < 0) {
-				if (item.getQuality() < 50) {
-					item.setQuality(item.getQuality() + 1);
-				}
-			}
-		} else if (item.getName().equals("Backstage passes to a TAFKAL80ETC concert")) {
-			if (item.getSellIn() < 0) {
-				item.setQuality(item.getQuality() - item.getQuality());
-			}
-		} else {
 			if (item.getSellIn() < 0) {
 				if (item.getQuality() > 0) {
 					item.setQuality(item.getQuality() - 1);
