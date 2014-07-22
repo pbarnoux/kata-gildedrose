@@ -12,13 +12,24 @@
 		<td>{{item.quality}}</td>
 	</tr>
 </table>
+<button ng-click="update()">Update</button>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
 <script type="text/javascript">
 var InnController = function($scope, $http) {
-	$http.get('/items').
-		success(function(data) {
-			$scope.items = data;
-	});
+	var refreshItems = function() {
+		$http.get('/items').
+			success(function(data) {
+				$scope.items = data;
+		});
+	}
+
+	refreshItems();
+	$scope.update = function() {
+		$http.get('/update').
+			success(function() {
+				refreshItems();
+		});
+	}
 }
 </script>
 </body>

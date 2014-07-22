@@ -37,6 +37,11 @@ class InnServerHandler implements HttpHandler {
 			exchange.getResponseBody().write(content);
 			break;
 		}
+		case "/update": {
+			inn.updateQuality();
+			exchange.sendResponseHeaders(200, -1);
+			break;
+		}
 		default:
 			final byte content[] = Files.readAllBytes(Paths.get("web", "index.html"));
 			exchange.getResponseHeaders().add("Content-Type", "text/html");
