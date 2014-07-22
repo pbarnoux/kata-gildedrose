@@ -5,7 +5,13 @@
 	<meta charset="UTF-8">
 </head>
 <body ng-controller="InnController">
-{{items}}
+<table>
+	<tr ng-repeat="item in items">
+		<td>{{item.name}}</td>
+		<td>{{item.sellIn}}</td>
+		<td>{{item.quality}}</td>
+	</tr>
+</table>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
 <script type="text/javascript">
 var InnController = function($scope, $http) {
