@@ -2,6 +2,8 @@ package code.kata.gildedrose;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import com.sun.net.httpserver.*;
 
@@ -24,7 +26,7 @@ class InnServerHandler implements HttpHandler {
 		final String uri = exchange.getRequestURI().toString();
 
 		switch (uri) {
-		case "/": {
+		case "/hello": {
 			final byte content[] = "Hello World".getBytes();
 			exchange.getResponseHeaders().add("Content-Type", "text/html");
 			exchange.sendResponseHeaders(200, content.length);
@@ -32,7 +34,11 @@ class InnServerHandler implements HttpHandler {
 			break;
 		}
 		default:
-			exchange.sendResponseHeaders(404, -1);
+			final byte content[] = Files.readAllBytes(Paths.get("web", "index.html"));
+			exchange.getResponseHeaders().add("Content-Type", "text/html");
+			exchange.sendResponseHeaders(200, content.length);
+			exchange.getResponseBody().write(content);
+			break;
 		}
 		exchange.close();
 	}
