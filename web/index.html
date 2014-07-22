@@ -3,16 +3,24 @@
 <head>
 	<title></title>
 	<meta charset="UTF-8">
+	<link href="http://www.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body ng-controller="InnController">
-<table>
+<div class="navbar navbar-inverse navbar-fixed-top">
+	<div class="navbar-inner">
+		<div class="container">
+			<a class="brand" href="#">Gilded Rose Kata</a>
+		</div>
+	</div>
+</div>
+<table class="table table-striped">
 	<tr ng-repeat="item in items">
 		<td>{{item.name}}</td>
 		<td>{{item.sellIn}}</td>
 		<td>{{item.quality}}</td>
 	</tr>
 </table>
-<button ng-click="update()">Update</button>
+<button ng-click="update()" class="btn btn-primary">Update</button>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
 <script type="text/javascript">
 var InnController = function($scope, $http) {
