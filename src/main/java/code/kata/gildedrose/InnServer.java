@@ -5,6 +5,7 @@ import java.net.InetSocketAddress;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sun.net.httpserver.*;
 
 public class InnServer {
@@ -21,14 +22,17 @@ public class InnServer {
 @SuppressWarnings("restriction")
 class InnServerHandler implements HttpHandler {
 
+	private final Inn inn = new Inn();
+
 	@Override
 	public void handle(final HttpExchange exchange) throws IOException {
 		final String uri = exchange.getRequestURI().toString();
+		final ObjectMapper mapper = new ObjectMapper();
 
 		switch (uri) {
-		case "/hello": {
-			final byte content[] = "Hello World".getBytes();
-			exchange.getResponseHeaders().add("Content-Type", "text/html");
+		case "/items": {
+			final byte content[] = mapper.writeValueAsBytes(inn.getItems());
+			exchange.getResponseHeaders().add("Content-Type", "application/json");
 			exchange.sendResponseHeaders(200, content.length);
 			exchange.getResponseBody().write(content);
 			break;

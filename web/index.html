@@ -5,11 +5,14 @@
 	<meta charset="UTF-8">
 </head>
 <body ng-controller="InnController">
-{{hello}}
+{{items}}
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.20/angular.min.js"></script>
 <script type="text/javascript">
-var InnController = function($scope) {
-	$scope.hello = "The longest hello world I've ever written... (angular)"
+var InnController = function($scope, $http) {
+	$http.get('/items').
+		success(function(data) {
+			$scope.items = data;
+	});
 }
 </script>
 </body>
